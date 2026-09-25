@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bharat Search - Nexus</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #F8FAFC; margin: 0; color: #0B162C; }
+        .navbar { display: flex; justify-content: space-between; padding: 20px 5%; background: white; border-bottom: 1px solid #E2E8F0; }
+        .logo { font-size: 20px; font-weight: 800; color: #0B162C; text-decoration: none; }
+        
+        .container { max-width: 800px; margin: 60px auto; background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .header-box { border-bottom: 3px solid #3B82F6; padding-bottom: 20px; margin-bottom: 30px; }
+        .header-box h1 { margin: 0; font-size: 28px; display: flex; align-items: center; gap: 10px; }
+        
+        label { font-weight: 600; margin-bottom: 8px; display: block; color: #475569; }
+        input[type="text"], input[type="file"] { width: 100%; padding: 16px; border: 2px solid #E2E8F0; border-radius: 10px; font-family: inherit; font-size: 16px; margin-bottom: 25px; box-sizing: border-box; transition: 0.3s; }
+        input[type="text"]:focus { border-color: #3B82F6; outline: none; }
+        
+        button { background: #3B82F6; color: white; border: none; padding: 16px; width: 100%; border-radius: 10px; font-size: 16px; font-weight: 700; cursor: pointer; transition: 0.3s; }
+        button:hover { background: #2563EB; transform: translateY(-2px); }
+        
+        #responseArea { margin-top: 30px; padding: 20px; background: #EFF6FF; border-left: 4px solid #3B82F6; border-radius: 0 10px 10px 0; display: none; line-height: 1.6; }
+        .loader { display: none; text-align: center; color: #3B82F6; font-weight: 600; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <nav class="navbar"><a href="index.html" class="logo">⬅ Back to Home</a></nav>
+    <div class="container">
+        <div class="header-box">
+            <h1>🌐 Bharat Search</h1>
+            <p style="color: #64748B; margin-top: 5px;">Universal multi-modal search engine.</p>
+        </div>
+        
+        <label>Enter Search Query:</label>
+        <input type="text" id="queryInput" placeholder="Ask anything...">
+        
+        <label>Upload Document (Optional):</label>
+        <input type="file" id="fileInput" accept=".png, .jpg, .jpeg, .pdf">
+        
+        <button onclick="submitQuery()">Search Database</button>
+        <div class="loader" id="loader">Processing...</div>
+        <div id="responseArea"></div>
+    </div>
+
+    <script>
+        async function submitQuery() {
+            const query = document.getElementById('queryInput').value;
+            const file = document.getElementById('fileInput').files[0];
+            const responseArea = document.getElementById('responseArea');
+            const loader = document.getElementById('loader');
+
+            if (!query && !file) return alert("Please provide input.");
+            responseArea.style.display = 'none'; loader.style.display = 'block';
+
+            const formData = new FormData();
+            formData.append('prompt', query || "Analyze this.");
+            formData.append('mode', 'search');
+            if (file) formData.append('file', file);
+
+            try {
+                const res = await fetch('http://127.0.0.1:8000/api/v1/query', { method: 'POST', body: formData });
+                const data = await res.json();
+                if (res.ok) { responseArea.innerHTML = "<strong>Result:</strong><br><br>" + data.response; responseArea.style.display = 'block'; }
+                else alert("Error: " + data.detail);
+            } catch (e) { alert("Backend connection failed."); }
+            loader.style.display = 'none';
+        }
+    </script>
+</body>
+</html>

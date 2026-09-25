@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bharat Nexus - Enterprise AI</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap');
+        
+        :root {
+            --saffron: #FF9933;
+            --white: #FFFFFF;
+            --green: #138808;
+            --navy: #0B162C;
+            --blue: #3B82F6;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            margin: 0;
+            background: linear-gradient(-45deg, #f8fafc, #e2e8f0, #f1f5f9, #ffffff);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: var(--navy);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Navbar with Glassmorphism */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 5%;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+        }
+        .logo { font-size: 26px; font-weight: 800; color: var(--navy); display: flex; align-items: center; gap: 10px; }
+        .logo span { 
+            background: linear-gradient(90deg, var(--saffron), var(--blue), var(--green)); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+        }
+
+        /* Hero Section */
+        .hero { 
+            text-align: center; 
+            padding: 100px 20px 60px; 
+            max-width: 900px; 
+            margin: 0 auto; 
+            animation: fadeInUp 1s ease-out forwards;
+        }
+        .hero h1 { 
+            font-size: 4.5rem; 
+            font-weight: 800; 
+            margin-bottom: 20px; 
+            line-height: 1.2; 
+            letter-spacing: -1.5px; 
+        }
+        .hero h1 span {
+            background: linear-gradient(135deg, #0B162C, #3B82F6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero p { 
+            font-size: 1.25rem; 
+            color: #475569; 
+            margin-bottom: 40px; 
+            font-weight: 500; 
+            max-width: 700px;
+            margin-inline: auto;
+            line-height: 1.6;
+        }
+
+        /* Module Cards */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            padding: 0 5%;
+            max-width: 1200px;
+            margin: 0 auto 80px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 40px 30px;
+            text-decoration: none;
+            color: var(--navy);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.04);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out forwards;
+        }
+        
+        /* Staggered animation delays for cards */
+        .card:nth-child(1) { animation-delay: 0.2s; }
+        .card:nth-child(2) { animation-delay: 0.4s; }
+        .card:nth-child(3) { animation-delay: 0.6s; }
+
+        .card::before {
+            content: ""; 
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 6px; 
+            transition: 0.5s ease;
+        }
+        .card.search::before { background: var(--blue); }
+        .card.ai::before { background: var(--saffron); }
+        .card.lok::before { background: var(--green); }
+
+        .card:hover {
+            transform: translateY(-15px) scale(1.02);
+            border-color: rgba(255, 255, 255, 1);
+        }
+        
+        .card.search:hover { box-shadow: 0 25px 50px rgba(59, 130, 246, 0.15); }
+        .card.ai:hover { box-shadow: 0 25px 50px rgba(255, 153, 51, 0.15); }
+        .card.lok:hover { box-shadow: 0 25px 50px rgba(19, 136, 8, 0.15); }
+
+        .icon { 
+            font-size: 52px; 
+            margin-bottom: 25px; 
+            display: inline-block;
+            transition: transform 0.5s ease;
+        }
+        .card:hover .icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .card h2 { font-size: 1.7rem; margin-bottom: 15px; font-weight: 800; }
+        .card p { color: #64748B; font-size: 1.05rem; line-height: 1.6; margin: 0; }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo">✦ Bharat <span>Nexus</span></div>
+    </nav>
+
+    <div class="hero">
+        <h1>Empowering the Nation with <span>Smart Intelligence</span></h1>
+        <p>A unified, enterprise-grade AI ecosystem engineered for intelligent governance, universal search, and advanced reasoning.</p>
+    </div>
+
+    <div class="grid-container">
+        <!-- Card 1: Search -->
+        <a href="bharat-search.html" class="card search">
+            <div class="icon">🌐</div>
+            <h2>Bharat Search</h2>
+            <p>High-speed, multi-modal knowledge retrieval matrix. Search the web and documents instantly with precision.</p>
+        </a>
+
+        <!-- Card 2: AI -->
+        <a href="bharat-ai.html" class="card ai">
+            <div class="icon">🧠</div>
+            <h2>Bharat AI</h2>
+            <p>Advanced neural reasoning core. Your personal assistant for logical problem-solving and content generation.</p>
+        </a>
+
+        <!-- Card 3: Lok-Sevak -->
+        <a href="lok-sevak.html" class="card lok">
+            <div class="icon">🏛️</div>
+            <h2>Lok-Sevak</h2>
+            <p>Dedicated public welfare module. Seamlessly resolve grievances and decode government schemes.</p>
+        </a>
+    </div>
+
+</body>
+</html>
